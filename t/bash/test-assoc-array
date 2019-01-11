@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+KISSBASH_DIR="${DIR%%/kissbash*}/kissbash/s"
+
+. $KISSBASH_DIR/test-util/expecting
+
+test_bash_version_too_low() {
+    expect_exit_code 1 \
+        BASH_VERSION=3.something . $KISSBASH_DIR/bash/assoc-array
+}
+
+test_bash_version_ok() {
+    expect_exit_code 0 \
+        BASH_VERSION=4.something . $KISSBASH_DIR/bash/assoc-array
+}
+
+test_bash_version_high() {
+    expect_exit_code 0 \
+        BASH_VERSION=23.something . $KISSBASH_DIR/bash/assoc-array
+}

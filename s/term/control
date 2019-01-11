@@ -1,0 +1,24 @@
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+KISSBASH_DIR="${DIR%%/kissbash*}/kissbash/s"
+
+. $KISSBASH_DIR/bash/assoc-array
+
+declare -A ESC_CHAR
+
+# https://en.wikipedia.org/wiki/ANSI_escape_code
+
+ESC_CHAR[up1]="\033[1A"
+ESC_CHAR[down1]="\033[1B"
+ESC_CHAR[forward1]="\033[1C"
+ESC_CHAR[backward1]="\033[1D"
+
+ESC_CHAR[clear_screen_after_cursor]="\033[0J"
+ESC_CHAR[clear_screen_before_cursor]="\033[1J"
+ESC_CHAR[clear_screen]="\033[2J"
+
+ESC_CHAR[clear_line_after_cursor]="\033[0K"
+ESC_CHAR[clear_line_before_cursor]="\033[1K"
+ESC_CHAR[clear_line]="\033[2K"
+
+ESC_CHAR[save_pos]="\033[s"
+ESC_CHAR[restore_pos]="\033[u"

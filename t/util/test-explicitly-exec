@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+KISSBASH_DIR="${DIR%%/kissbash*}/kissbash/s"
+
+. "$KISSBASH_DIR/test-util/expecting"
+
+test_dummy() {
+    expect_exit_code 0 "
+        . $KISSBASH_DIR/exec/explicitly
+        explicitly echo a b c 0 1
+    "
+}

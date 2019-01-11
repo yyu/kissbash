@@ -1,0 +1,4 @@
+if [ "${BASH_VERSION%%.*}" -lt 4 ]; then
+    echo -e 'bash 4+ is needed but this is '${BASH_VERSION}
+    exit 1
+fi

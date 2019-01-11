@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+KISSBASH_DIR="${DIR%%/kissbash*}/kissbash/s"
+
+expect_exit_code() {
+    expected_retval=$1
+    shift
+
+    tmpf=`mktemp`
+
+    echo -en "\033[37m[${BASH_SOURCE[0]#*kissbash/}] \033[33m" >> $tmpf
+    #echo "bash -c \"$* >> $tmpf 2>&1\"" >> $tmpf
+    echo "bash -c \"$*\"" >> $tmpf
+    echo -e "\033[0m" >> $tmpf
+
+    bash -c "$* >> $tmpf 2>&1" # HERE
+    retval=$?
+
+    echo >> $tmpf
+    echo -e "\033[37m[${BASH_SOURCE[0]#*kissbash/}] \033[33mexpecting exit code "$expected_retval", got "$retval"\033[0m" >> $tmpf
+
+    cat $tmpf
+    #rm $tmpf
+
+    echo -en "\033[1A\033[0G" >&2
+    if [ "x$retval" == "x$expected_retval" ]; then
+        echo -e "\033[32mPASS\033[0m" >&2
+    else
+        echo -e "\033[31mFAIL\033[0m" >&2
+    fi
+}

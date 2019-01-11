@@ -1,0 +1,19 @@
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+KISSBASH_DIR="${DIR%%/kissbash*}/kissbash/s"
+
+. $KISSBASH_DIR/term/colors
+
+serr_with_color() {
+    local color_key="$1"
+    local color_start="${COLOR[$color_key]}"
+    local color_end="${COLOR[clr]}"
+    while read line; do
+        echo -e "$color_start$line$color_end" >&2
+    done
+}
+
+tee_serr_with_color() {
+    while read line; do
+        echo $line | tee >(serr_with_color "$@")
+    done
+}
