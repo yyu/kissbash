@@ -5,9 +5,17 @@ KISSBASH_DIR="${DIR%%/kissbash*}/kissbash/s"
 
 . "$KISSBASH_DIR/test-util/expecting"
 
-test_dummy() {
+test_explicitly_good() {
     expect_exit_code 0 "
-        . $KISSBASH_DIR/exec/explicitly
-        explicitly echo a b c 0 1
+        line_nr=\$(
+            . $KISSBASH_DIR/exec/explicitly
+            explicitly echo foo 0 1 2>&1 | grep foo | wc -l | sed -e 's/^[[:space:]]*//'
+        )
+        echo \"there should have 2 lines matching foo, one from stderr and the other stdout\"
+        echo \"saw \$line_nr lines\"
+        if test \"x\$line_nr\" != \"x2\"; then
+            echo \"expecting 2; got \$line_nr\"
+            exit 222
+        fi
     "
 }
