@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-KISSBASH_PATH="${DIR%%/test/*}/../kissbash"
+KISSBASH_PATH="${DIR%%/test/*}/kissbash"
 
 . $KISSBASH_PATH/test-util/expecting
 

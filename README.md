@@ -53,6 +53,7 @@ output:
 
 One argument:
 ```bash
+$ . $KISSBASH_PATH/console/lines
 $ (echos 2; echo hello) | cat -n
      1	
      2	
@@ -61,6 +62,7 @@ $ (echos 2; echo hello) | cat -n
 
 More than one argument:
 ```bash
+$ . $KISSBASH_PATH/console/lines
 $ (echos 3 .; echo hello) | cat -n
      1	...hello
 ```
@@ -68,6 +70,7 @@ $ (echos 3 .; echo hello) | cat -n
 ### `serr_with_color`
 
 ```bash
+$ . $KISSBASH_PATH/console/lines
 $ echo hello | serr_with_color red
 hello
 ```
@@ -76,6 +79,7 @@ You should see red `hello` in your console.
 ### `tee_serr_with_color`
 
 ```bash
+$ . $KISSBASH_PATH/console/lines
 $ echo hello | tee_serr_with_color red
 hello
 hello
@@ -87,6 +91,7 @@ You should see red `hello` for stderr and normal `hello` for stdout.
 ### `line_pre_echo_control`
 
 ```bash
+$ . $KISSBASH_PATH/console/lines
 $ echo -e "\none\n"; echo two; echo three
 
 one
@@ -103,6 +108,7 @@ three
 ## `exec/explicitly`
 
 ```bash
+$ . $KISSBASH_PATH/exec/explicitly
 $ explicitly echo "2+3" | bc
 echo 2+3
 5
