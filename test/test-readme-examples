@@ -1,0 +1,37 @@
+rm -rf ~/.kissbash && git clone https://github.com/yyu/kissbash.git ~/.kissbash
+
+echo $KISSBASH_PATH
+export KISSBASH_PATH=~/.kissbash/kissbash
+echo $KISSBASH_PATH
+
+. $KISSBASH_PATH/console/lines
+
+cat > /tmp/myscript << "EOF"
+. "$KISSBASH_PATH/console/lines"
+echos 3; echo line1
+echo line2 | line_pre_echo_control up1 up1 up1
+echo line3
+echos 10
+cat /tmp/myscript | line_pre_echo_control up1 up1
+echos 7
+EOF
+
+. /tmp/myscript
+
+(echos 2; echo hello) | cat -n
+
+(echos 3 .; echo hello) | cat -n
+
+echo hello | serr_with_color red
+
+echo hello | tee_serr_with_color red
+
+echo hello | tee_serr_with_color red > /dev/null
+
+echo -e "\none\n"; echo two; echo three
+
+echo -e "\none\n"; echo two | line_pre_echo_control up1; echo three
+
+. $KISSBASH_PATH/exec/explicitly
+
+explicitly echo "2+3" | bc
