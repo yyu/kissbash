@@ -24,6 +24,22 @@ serr_with_color() {
     done
 }
 
+color_line_per_keyword() {
+    local color_key="$1"
+    local keyword="$2"
+    while read line; do
+        local color_start=
+        local color_end=
+
+        if `echo $line | grep -q -E "$keyword"`; then
+            color_start="${COLOR[$color_key]}"
+            color_end="${COLOR[clr]}"
+        fi
+
+        echo -e "$color_start$line$color_end"
+    done
+}
+
 tee_serr_with_color() {
     while read line; do
         echo $line | tee >(serr_with_color "$@")
