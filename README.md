@@ -6,11 +6,16 @@ If nobody cares, at least it will benefit myself.
 
 # How to use
 
-Set the `KISSBASH_PATH` environment variable and you are good to go. For example,
+Set the `KISSBASH_PATH` environment variable and you are good to go.
 
 ```bash
 $ git clone https://github.com/yyu/kissbash.git
 $ export KISSBASH_PATH=`pwd`/kissbash/s
+```
+
+## Example
+
+```bash
 $ cat > /tmp/myscript << "EOF"
 . "$KISSBASH_PATH/console/lines"
 echos 3; echo line1
