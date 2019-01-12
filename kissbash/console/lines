@@ -1,8 +1,5 @@
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-KISSBASH_DIR="${DIR%%/kissbash*}/kissbash/s"
-
-. $KISSBASH_DIR/term/colors
-. $KISSBASH_DIR/term/control
+. $KISSBASH_PATH/term/colors
+. $KISSBASH_PATH/term/control
 
 echos() {
     local n=$1

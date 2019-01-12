@@ -1,0 +1,6 @@
+. $KISSBASH_PATH/console/lines
+
+explicitly() {
+    echo "$*" | serr_with_color gry
+    "$@"
+}

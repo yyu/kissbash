@@ -9,8 +9,8 @@ If nobody cares, at least it will benefit myself.
 Set the `KISSBASH_PATH` environment variable and you are good to go.
 
 ```bash
-$ git clone https://github.com/yyu/kissbash.git
-$ export KISSBASH_PATH=`pwd`/kissbash/s
+$ git clone https://github.com/yyu/kissbash.git ~/.kissbash
+$ export KISSBASH_PATH=~/.kissbash/kissbash
 ```
 
 ## Example

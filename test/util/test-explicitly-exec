@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-KISSBASH_DIR="${DIR%%/kissbash*}/kissbash/s"
+KISSBASH_PATH="${DIR%%/test/*}/../kissbash"
 
-. "$KISSBASH_DIR/test-util/expecting"
+. "$KISSBASH_PATH/test-util/expecting"
 
 test_explicitly_good() {
     expect_exit_code 0 "
         line_nr=\$(
-            . $KISSBASH_DIR/exec/explicitly
+            . $KISSBASH_PATH/exec/explicitly
             explicitly echo foo 0 1 2>&1 | grep foo | wc -l | sed -e 's/^[[:space:]]*//'
         )
         echo \"there should have 2 lines matching foo, one from stderr and the other stdout\"

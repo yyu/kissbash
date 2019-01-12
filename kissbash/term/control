@@ -1,7 +1,4 @@
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-KISSBASH_DIR="${DIR%%/kissbash*}/kissbash/s"
-
-. $KISSBASH_DIR/bash/assoc-array
+. $KISSBASH_PATH/bash/assoc-array
 
 declare -A ESC_CHAR
 
