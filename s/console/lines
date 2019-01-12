@@ -2,6 +2,13 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 KISSBASH_DIR="${DIR%%/kissbash*}/kissbash/s"
 
 . $KISSBASH_DIR/term/colors
+. $KISSBASH_DIR/term/control
+
+echos() {
+    for ((i=0;i<$1;i++)); do
+        echo
+    done
+}
 
 serr_with_color() {
     local color_key="$1"
@@ -15,5 +22,14 @@ serr_with_color() {
 tee_serr_with_color() {
     while read line; do
         echo $line | tee >(serr_with_color "$@")
+    done
+}
+
+line_pre_echo_control() {
+    while read line; do
+        for c in $@; do
+            echo -en "${ESC_CHAR[up1]}"
+        done
+        echo -e "$line"
     done
 }
