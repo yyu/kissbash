@@ -40,3 +40,84 @@ output:
 
     $
 
+# Document
+
+## `console/lines`
+
+### `echos`
+
+One argument:
+```bash
+$ (echos 2; echo hello) | cat -n
+     1	
+     2	
+     3	hello
+```
+
+More than one argument:
+```bash
+$ (echos 3 .; echo hello) | cat -n
+     1	...hello
+```
+
+### `serr_with_color`
+
+```bash
+$ echo hello | serr_with_color red
+hello
+```
+You should see red `hello` in your console.
+
+### `tee_serr_with_color`
+
+```bash
+$ echo hello | tee_serr_with_color red
+hello
+hello
+$ echo hello | tee_serr_with_color red > /dev/null
+hello
+```
+You should see red `hello` for stderr and normal `hello` for stdout.
+
+### `line_pre_echo_control`
+
+```bash
+$ echo -e "\none\n"; echo two; echo three
+
+one
+
+two
+three
+$ echo -e "\none\n"; echo two | line_pre_echo_control up1; echo three
+
+one
+two
+three
+```
+
+## `exec/explicitly`
+
+```bash
+$ explicitly echo "2+3" | bc
+echo 2+3
+5
+```
+
+## testing
+
+    $ t/test-all
+    Running /Users/forresty/___/github/kissbash/t/bash/test-assoc-array
+    PASS test_bash_version_too_low
+    PASS test_bash_version_ok
+    PASS test_bash_version_high
+
+    Running /Users/forresty/___/github/kissbash/t/util/test-explicitly-exec
+    PASS test_explicitly_good
+
+    **************************************DONE**************************************
+
+    for details,
+    cat /var/folders/yd/c3kph1693ns3rtft7jwscyj5snhf_t/T/tmp.qWVmW057
+    ```
+
+Tip: `t/test-all -v` will automatically show details.

@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+KISSBASH_DIR="${DIR%%/kissbash*}/kissbash/s"
+
+. $KISSBASH_DIR/test-util/expecting
+
+test_echos_1argument() {
+    . $KISSBASH_DIR/console/lines
+
+    diff <(cat << "EOF"
+
+
+hello
+EOF
+            ) <(echos 2; echo hello)
+
+    expect_exit_code 0 \
+        [ $? -eq 0 ]
+}
+
+test_echos_2argument() {
+    . $KISSBASH_DIR/console/lines
+
+    diff <(cat << "EOF"
+
+
+........hello
+EOF
+            ) <(echos 2; echos 8 .; echo hello)
+
+    expect_exit_code 0 \
+        [ $? -eq 0 ]
+}
+
+test_echos_3argument() {
+    . $KISSBASH_DIR/console/lines
+
+    diff <(cat << "EOF"
+
+
+_._._._.hello
+EOF
+            ) <(echos 2; echos 4 _ .; echo hello)
+
+    expect_exit_code 0 \
+        [ $? -eq 0 ]
+}
+
+
+test_bash_version_ok() {
+    expect_exit_code 0 \
+        BASH_VERSION=4.something . $KISSBASH_DIR/bash/assoc-array
+}
+
+test_bash_version_high() {
+    expect_exit_code 0 \
+        BASH_VERSION=23.something . $KISSBASH_DIR/bash/assoc-array
+}
+

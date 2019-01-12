@@ -5,8 +5,16 @@ KISSBASH_DIR="${DIR%%/kissbash*}/kissbash/s"
 . $KISSBASH_DIR/term/control
 
 echos() {
-    for ((i=0;i<$1;i++)); do
-        echo
+    local n=$1
+    shift
+    for ((i=0;i<$n;i++)); do
+        if [ $# -eq 0 ]; then
+            echo
+        else
+            for c in $@; do
+                echo -n $c
+            done
+        fi
     done
 }
 
