@@ -1,4 +1,4 @@
-# kissbash - A Simple and Stupid Bash Script Library
+# kissbash - A [Simple and Stupid](https://en.wikipedia.org/wiki/KISS_principle) Bash Script Library
 
 Despite [what people say](https://stackoverflow.com/a/11369935), I decide to write a bash script library.
 
