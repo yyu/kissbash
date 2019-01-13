@@ -15,13 +15,44 @@ echos() {
     done
 }
 
-serr_with_color() {
+sout() {
+    while read line; do
+        echo "$line"
+    done
+}
+
+serr() {
+    sout "$*" >&2
+}
+
+tee_sout() {
+    while read line; do
+        echo "$line" | tee >(sout "$*")
+    done
+}
+
+tee_serr() {
+    while read line; do
+        echo "$line" | tee >(serr "$*")
+    done
+}
+
+color() {
     local color_key="$1"
+    shift
     local color_start="${COLOR[$color_key]}"
     local color_end="${COLOR[clr]}"
-    while read line; do
-        echo -e "$color_start$line$color_end" >&2
-    done
+    if [ $# -eq 0 ]; then
+        while read line; do
+            echo -e "$color_start$line$color_end"
+        done
+    else
+        echo -e "$color_start$@$color_end"
+    fi
+}
+
+serr_with_color() {
+    color "$@" >&2
 }
 
 color_line_per_keyword() {

@@ -1,0 +1,109 @@
+. "$KISSBASH_PATH/term/colors"
+. "$KISSBASH_PATH/term/control"
+. "$KISSBASH_PATH/exec/explicitly"
+
+CANONICAL_OWNER_ID="099720109477"
+
+get_ebs_volumes() {
+    local volumeid="ID:VolumeId"
+    local az="AZ:AvailabilityZone"
+    local instanceid="InstanceId:Attachments[0].InstanceId"
+    local device="Device:Attachments[0].Device"
+    local tag="Tag:Tags[0]"
+    local size="Size:Size"
+    local state="State:State"
+
+    opts=
+    if [ $# -gt 0 ]; then
+        opts="--volume-ids $@"
+    fi
+
+    explicitly \
+        aws ec2 describe-volumes \
+        $opts \
+        --query "Volumes[*].{$volumeid,$tag,$az,$instanceid,$device,$size,$state}" \
+        --output text | sort -k2
+}
+
+#   args: igored
+#  stdin: EBS volume id
+# output: EBS volume id if it exists
+# return: the return value of grep -- 0 if EBS volume id exists, otherwise 1
+get_ebs_volume_id_from_stdin() {
+    local volume_ids=`get_ebs_volumes | tee_serr_with_color ylw | cut -d' ' -f3`
+    echo -e "Which volume? Please enter the full volume id: " | serr_with_color mgt
+    read volume_id
+    echo $volume_ids | grep -o -E "\<$volume_id\>"
+}
+
+get_ec2_instance_id_for_volume() {
+    local volumeid=$1
+
+    explicitly \
+        aws ec2 describe-volumes \
+            --volume-ids $volumeid \
+            --query "Volumes[*].{InstanceId:Attachments[0].InstanceId}" \
+            --output text | sort -k2
+}
+
+wait_until_volume_is() {
+    local awaited_state=$1
+    local volume_id=$2
+    serr_with_color ylw "waiting for $volume_id's state to be $awaited_state"
+    while : ; do
+        sleep 1
+        local new_volume_state=`explicitly \
+                                aws ec2 describe-volumes \
+                                    --volume-ids $volume_id \
+                                    --query "Volumes[*].{InstanceId:State}" \
+                                    --output text \
+                                | tee_serr_with_color ylw`
+        if [ "$new_volume_state" == "$awaited_state" ]; then
+            break
+        fi
+    done
+}
+
+list_ec2_instances_web_style() {
+    local instanceid="instanceid:InstanceId"
+    local ami="ami:ImageId"
+    local type="type:InstanceType"
+    local name="name:Tags[0].Value"
+    local az="az:Placement.AvailabilityZone"
+    local state="state:State.Name"
+    local pemkey="pemkey:KeyName"
+    local launchtime="launchtime:LaunchTime"
+
+    explicitly \
+        aws ec2 describe-instances \
+            --query "Reservations[*].Instances[0].{$instanceid,$ami,$type,$name,$az,$state,$pemkey,$launchtime}" \
+            --output text | sort -k4
+}
+
+list_ec2_instances_web_style_default_color() {
+    explicitly \
+        list_ec2_instances_web_style \
+            | color_line_per_keyword grn running \
+            | color_line_per_keyword red stopped
+}
+
+#   args: igored
+#  stdin: instance id
+# output: instance id if it exists
+# return: the return value of grep -- 0 if instance id exists, otherwise 1
+get_ec2_instance_id_from_stdin() {
+    local instance_ids=`list_ec2_instances_web_style_default_color | tee_serr | cut -d' ' -f3`
+    echo -e "Which instance? Please enter the full instance id: " | serr_with_color mgt
+    read instance_id
+    echo $instance_ids | grep -o -E "\<$instance_id\>"
+}
+
+get_ec2_instance_public_ip() {
+    local instance_id="$1"
+
+    aws ec2 describe-instances \
+        --instance-ids "$instance_id" \
+        --query 'Reservations[0].Instances[0].NetworkInterfaces[0].Association.PublicIp' \
+        --output text
+}
+

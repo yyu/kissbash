@@ -17,3 +17,5 @@ COLOR[cyn]="\033[0;36m"
 COLOR[CYN]="\033[1;36m"
 COLOR[gry]="\033[0;37m"
 COLOR[GRY]="\033[1;37m"
+
+COLOR[_GRY_]="\033[47;37m"
