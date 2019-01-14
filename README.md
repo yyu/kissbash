@@ -117,12 +117,12 @@ echo 2+3
 ## testing
 
     $ t/test-all
-    Running /Users/forresty/___/github/kissbash/t/bash/test-assoc-array
+    Running /.../kissbash/t/bash/test-assoc-array
     PASS test_bash_version_too_low
     PASS test_bash_version_ok
     PASS test_bash_version_high
 
-    Running /Users/forresty/___/github/kissbash/t/util/test-explicitly-exec
+    Running /.../kissbash/t/util/test-explicitly-exec
     PASS test_explicitly_good
 
     **************************************DONE**************************************
