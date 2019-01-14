@@ -3,6 +3,7 @@
 declare -A COLOR
 
 COLOR[clr]="\033[0m"
+
 COLOR[red]="\033[0;31m"
 COLOR[RED]="\033[1;31m"
 COLOR[grn]="\033[0;32m"
@@ -17,5 +18,20 @@ COLOR[cyn]="\033[0;36m"
 COLOR[CYN]="\033[1;36m"
 COLOR[gry]="\033[0;37m"
 COLOR[GRY]="\033[1;37m"
+
+COLOR[r_d]="\033[0;5;31m"
+COLOR[R_D]="\033[1;5;31m"
+COLOR[g_n]="\033[0;5;32m"
+COLOR[G_N]="\033[1;5;32m"
+COLOR[y_w]="\033[0;5;33m"
+COLOR[Y_W]="\033[1;5;33m"
+COLOR[b_u]="\033[0;5;34m"
+COLOR[B_U]="\033[1;5;34m"
+COLOR[m_t]="\033[0;5;35m"
+COLOR[M_T]="\033[1;5;35m"
+COLOR[c_n]="\033[0;5;36m"
+COLOR[C_N]="\033[1;5;36m"
+COLOR[g_y]="\033[0;5;37m"
+COLOR[G_Y]="\033[1;5;37m"
 
 COLOR[_GRY_]="\033[47;37m"

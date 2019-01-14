@@ -31,7 +31,7 @@ get_ebs_volumes() {
 # return: the return value of grep -- 0 if EBS volume id exists, otherwise 1
 get_ebs_volume_id_from_stdin() {
     local volume_ids=`get_ebs_volumes | tee_serr_with_color ylw | cut -d' ' -f3`
-    echo -e "Which volume? Please enter the full volume id: " | serr_with_color mgt
+    echo -e "Which volume? Please enter the full volume id: " | serr_with_color m_t
     read volume_id
     echo $volume_ids | grep -o -E "\<$volume_id\>"
 }
@@ -93,7 +93,7 @@ list_ec2_instances_web_style_default_color() {
 # return: the return value of grep -- 0 if instance id exists, otherwise 1
 get_ec2_instance_id_from_stdin() {
     local instance_ids=`list_ec2_instances_web_style_default_color | tee_serr | cut -d' ' -f3`
-    echo -e "Which instance? Please enter the full instance id: " | serr_with_color mgt
+    echo -e "Which instance? Please enter the full instance id: " | serr_with_color m_t
     read instance_id
     echo $instance_ids | grep -o -E "\<$instance_id\>"
 }
